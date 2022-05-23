@@ -30,6 +30,10 @@
 # ##########################################################################
 SED = sed
 
+# Use VaRA specific clang
+CC = $(VARA_CLANG_BIN_DIR)clang
+CXX = $(VARA_CLANG_BIN_DIR)clang++
+
 # Version numbers
 LZ4DIR   := ../lib
 LIBVER_SRC := $(LZ4DIR)/lz4.h
@@ -59,6 +63,13 @@ OS_VERSION ?= $(UNAME) -r
 ifeq ($(TARGET_OS)$(shell $(OS_VERSION)),SunOS5.10)
 LDFLAGS  += -lrt
 endif
+
+# Add VaRA specific compiler flags
+CPPFLAGS += -fvara-feature -fsanitize=vara -fvara-instr=trace_event -flto
+LDFLAGS += -fuse-ld=lld
+
+# VaRA feature model
+CPPFLAGS += -fvara-fm-path=$(LZ4_FEATURE_MODEL)
 
 FLAGS     = $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
