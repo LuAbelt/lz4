@@ -31,8 +31,8 @@
 SED = sed
 
 # Use VaRA specific clang
-CC = $(VARA_CLANG_BIN_DIR)clang
-CXX = $(VARA_CLANG_BIN_DIR)clang++
+CC = $(VARA_CLANG_BIN_DIR)/clang
+CXX = $(VARA_CLANG_BIN_DIR)/clang++
 
 # Version numbers
 LZ4DIR   := ../lib
@@ -65,7 +65,8 @@ LDFLAGS  += -lrt
 endif
 
 # Add VaRA specific compiler flags
-CPPFLAGS += -fvara-feature -fsanitize=vara -fvara-instr=trace_event -flto
+CPPFLAGS += -fvara-feature -fsanitize=vara -fvara-instr=trace_event
+CPPFLAGS += -flto=thin
 LDFLAGS += -fuse-ld=lld
 
 # VaRA feature model
